@@ -1,0 +1,52 @@
+#A-6 Sum Integers
+
+# Simple adding machine
+## Created for CS-3330 UH 
+## Help with reading in files found here: https://www.cs.uic.edu/~troy/spring04/cs366/ex2.html
+# Written by Michael Wainright, 10/31/2016
+
+	.data
+prompt:	.asciiz "Enter in an integer (0 to see result): "
+result:	.asciiz "The total is: "
+	.globl	main
+
+	.text
+main:
+
+	# initialize
+	#li	$s0, 10
+
+input:
+
+	# Prompt user for input.
+	li	$v0, 4
+	la	$a0, prompt
+	syscall
+
+	# Read in the value.
+	li	$v0, 5
+	syscall
+	move 	$s0, $v0
+
+	# Branch to output if input equals zero.
+	beqz	$s0, output
+	add $t1, $t1, $s0
+	#tgei $t1, 2147483647
+	#tlti $t1, -2147483648
+	j input
+
+output:
+
+	# print result
+	li	$v0, 4
+	la	$a0, result
+	syscall
+
+	# print value
+	li	$v0, 1
+	move	$a0, $t1
+	syscall
+
+	#Exit
+	li $v0, 10
+	syscall
